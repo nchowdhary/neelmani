@@ -20,6 +20,8 @@ import com.itextpdf.text.pdf.parser.PdfImageObject;
 
 public class CompressPDF {
 
+	
+	
 /** The resulting PDF file. */
 //public static String RESULT = "results/part4/chapter16/resized_image.pdf";
 /** The multiplication factor for the image. */
