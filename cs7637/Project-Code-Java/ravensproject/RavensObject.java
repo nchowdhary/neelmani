@@ -50,4 +50,15 @@ public class RavensObject {
     public HashMap<String,String> getAttributes() {
         return attributes;
     }
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RavensObject [name=").append(name).append(", attributes=").append(attributes).append("]");
+		return builder.toString();
+	}
+    
+    
+    
+    
 }

@@ -70,4 +70,14 @@ public class RavensFigure {
     public String getVisual() {
         return visualFilename;
     }
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RavensFigure [name=").append(name).append(", objects=").append(objects)
+				.append(", visualFilename=").append(visualFilename).append("]");
+		return builder.toString();
+	}
+    
+    
 }
