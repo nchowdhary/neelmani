@@ -16,13 +16,30 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
 
 
+
+
 /**
  * This class is used to merge two or more 
  * existing pdf file using iText jar.
  */
 public class MegePDF {
+	
+	
+	
+	
+	
 
-static void mergePdfFiles(List<InputStream> inputPdfList,
+	protected static String folderPath = "/Users/neelm/Google Drive/Important Documents/Devtara/Passport Renewal 2019/";
+	
+	protected static String file1 = "Devtara Passport 2010-19 part1.pdf";
+	protected static String file2 = "Devtara Passport 2010-19 part2.pdf";
+	
+	
+	
+	
+	
+
+	static void mergePdfFiles(List<InputStream> inputPdfList,
         OutputStream outputStream) throws Exception{
     //Create document and pdfReader objects.
     Document document = new Document();
@@ -77,12 +94,14 @@ static void mergePdfFiles(List<InputStream> inputPdfList,
     System.out.println("Pdf files merged successfully.");
 }
 
-public static void main(String args[]){
+
+	
+	public static void main(String args[]){
     try {
         //Prepare input pdf file list as list of input stream.
         List<InputStream> inputPdfList = new ArrayList<InputStream>();
-        inputPdfList.add(new FileInputStream(folderPath + "Devtara Passport 2010-19 part1.pdf"));
-        inputPdfList.add(new FileInputStream(folderPath + "Devtara Passport 2010-19 part2.pdf"));
+        inputPdfList.add(new FileInputStream(folderPath + file1));
+        inputPdfList.add(new FileInputStream(folderPath + file2));
 
 
 
@@ -98,7 +117,7 @@ public static void main(String args[]){
     }
 
 
-private static String folderPath = "/Users/neelm/Google Drive/Important Documents/Devtara/Passport Renewal 2019/";
+
 
 
 

@@ -20,6 +20,20 @@ import com.itextpdf.text.pdf.parser.PdfImageObject;
 
 public class CompressPDF {
 
+	protected static String folderPath = "C:\\Users\\neelm\\Google Drive\\Important Documents\\Devtara\\icici/";
+	
+	protected static String sourceFile = "Devtara NRI Account doc.pdf";
+	protected static String targetFile = sourceFile.substring(0, sourceFile.length()-4) + " Compressed.pdf";
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 /** The resulting PDF file. */
@@ -50,7 +64,7 @@ public void manipulatePdf(String src, String dest) throws IOException, DocumentE
         stream = (PRStream)object;
        // if (value.equals(stream.get(key))) {
         PdfObject pdfsubtype = stream.get(PdfName.SUBTYPE);
-        System.out.println(stream.type());
+       // System.out.println(stream.type());
         if (pdfsubtype != null && pdfsubtype.toString().equals(PdfName.IMAGE.toString())) {
             PdfImageObject image = new PdfImageObject(stream);
             BufferedImage bi = image.getBufferedImage();
@@ -82,7 +96,7 @@ public void manipulatePdf(String src, String dest) throws IOException, DocumentE
 }
 
 
-private static String folderPath = "/Users/neelm/Google Drive/Important Documents/Devtara/Passport Renewal 2019/";
+
 
 /**
  * Main method.
@@ -94,7 +108,8 @@ private static String folderPath = "/Users/neelm/Google Drive/Important Document
 public static void main(String[] args) throws IOException, DocumentException {
 	
     //createPdf(RESULT);
-    new CompressPDF().manipulatePdf(folderPath + "Devtara Passport 2010-19 part 2.pdf", folderPath + "Devtara Passport 2010-19 part2.pdf");
+    new CompressPDF().manipulatePdf(folderPath + sourceFile, folderPath + targetFile);
+    System.out.println(folderPath + targetFile + " generated.");
 }
 
 }
