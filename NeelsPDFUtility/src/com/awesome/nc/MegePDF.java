@@ -1,124 +1,99 @@
 package com.awesome.nc;
 
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.io.*;
+import java.util.*;
 import java.util.List;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfImportedPage;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfWriter;
-
-
-
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 
 /**
  * This class is used to merge two or more 
  * existing pdf file using iText jar.
  */
-public class MegePDF {
-	
-	
-	
-	
-	
+public class MegePDF
+{
 
-	protected static String folderPath = "/Users/neelm/Google Drive/Important Documents/Devtara/Passport Renewal 2019/";
-	
-	protected static String file1 = "Devtara Passport 2010-19 part1.pdf";
-	protected static String file2 = "Devtara Passport 2010-19 part2.pdf";
-	
-	
-	
-	
-	
+	protected static String folderPath = "/Users/neelmani/Google Drive/Homes/Bridgewater/Mortgage/refinance/03.Paystubs/";
 
-	static void mergePdfFiles(List<InputStream> inputPdfList,
-        OutputStream outputStream) throws Exception{
-    //Create document and pdfReader objects.
-    Document document = new Document();
-    List<PdfReader> readers = 
-            new ArrayList<PdfReader>();
-    int totalPages = 0;
+	protected static String file1 = "12. June 30 2020.pdf";
+	protected static String file2 = "11. June 15 2020.pdf";
 
-    //Create pdf Iterator object using inputPdfList.
-    Iterator<InputStream> pdfIterator = 
-            inputPdfList.iterator();
+	static void mergePdfFiles(List<InputStream> inputPdfList, OutputStream outputStream)
+		throws Exception
+	{
+		//Create document and pdfReader objects.
+		Document document = new Document();
+		List<PdfReader> readers = new ArrayList<PdfReader>();
+		int totalPages = 0;
 
-    // Create reader list for the input pdf files.
-    while (pdfIterator.hasNext()) {
-            InputStream pdf = pdfIterator.next();
-            PdfReader pdfReader = new PdfReader(pdf);
-            readers.add(pdfReader);
-            totalPages = totalPages + pdfReader.getNumberOfPages();
-    }
+		//Create pdf Iterator object using inputPdfList.
+		Iterator<InputStream> pdfIterator = inputPdfList.iterator();
 
-    // Create writer for the outputStream
-    PdfWriter writer = PdfWriter.getInstance(document, outputStream);
+		// Create reader list for the input pdf files.
+		while (pdfIterator.hasNext())
+		{
+			InputStream pdf = pdfIterator.next();
+			PdfReader pdfReader = new PdfReader(pdf);
+			readers.add(pdfReader);
+			totalPages = totalPages + pdfReader.getNumberOfPages();
+		}
 
-    //Open document.
-    document.open();
+		// Create writer for the outputStream
+		PdfWriter writer = PdfWriter.getInstance(document, outputStream);
 
-    //Contain the pdf data.
-    PdfContentByte pageContentByte = writer.getDirectContent();
+		//Open document.
+		document.open();
 
-    PdfImportedPage pdfImportedPage;
-    int currentPdfReaderPage = 1;
-    Iterator<PdfReader> iteratorPDFReader = readers.iterator();
+		//Contain the pdf data.
+		PdfContentByte pageContentByte = writer.getDirectContent();
 
-    // Iterate and process the reader list.
-    while (iteratorPDFReader.hasNext()) {
-            PdfReader pdfReader = iteratorPDFReader.next();
-            //Create page and add content.
-            while (currentPdfReaderPage <= pdfReader.getNumberOfPages()) {
-                  document.newPage();
-                  pdfImportedPage = writer.getImportedPage(
-                          pdfReader,currentPdfReaderPage);
-                  pageContentByte.addTemplate(pdfImportedPage, 0, 0);
-                  currentPdfReaderPage++;
-            }
-            currentPdfReaderPage = 1;
-    }
+		PdfImportedPage pdfImportedPage;
+		int currentPdfReaderPage = 1;
+		Iterator<PdfReader> iteratorPDFReader = readers.iterator();
 
-    //Close document and outputStream.
-    outputStream.flush();
-    document.close();
-    outputStream.close();
+		// Iterate and process the reader list.
+		while (iteratorPDFReader.hasNext())
+		{
+			PdfReader pdfReader = iteratorPDFReader.next();
+			//Create page and add content.
+			while (currentPdfReaderPage <= pdfReader.getNumberOfPages())
+			{
+				document.newPage();
+				pdfImportedPage = writer.getImportedPage(pdfReader, currentPdfReaderPage);
+				pageContentByte.addTemplate(pdfImportedPage, 0, 0);
+				currentPdfReaderPage++;
+			}
+			currentPdfReaderPage = 1;
+		}
 
-    System.out.println("Pdf files merged successfully.");
-}
+		//Close document and outputStream.
+		outputStream.flush();
+		document.close();
+		outputStream.close();
 
+		System.out.println("Pdf files merged successfully.");
+	}
 
-	
-	public static void main(String args[]){
-    try {
-        //Prepare input pdf file list as list of input stream.
-        List<InputStream> inputPdfList = new ArrayList<InputStream>();
-        inputPdfList.add(new FileInputStream(folderPath + file1));
-        inputPdfList.add(new FileInputStream(folderPath + file2));
+	public static void main(String args[])
+	{
+		try
+		{
+			//Prepare input pdf file list as list of input stream.
+			List<InputStream> inputPdfList = new ArrayList<InputStream>();
+			inputPdfList.add(new FileInputStream(folderPath + file1));
+			inputPdfList.add(new FileInputStream(folderPath + file2));
 
+			//Prepare output stream for merged pdf file.
+			OutputStream outputStream = new FileOutputStream(folderPath + "Merged.pdf");
 
-
-        //Prepare output stream for merged pdf file.
-        OutputStream outputStream = 
-                new FileOutputStream(folderPath + "Merged.pdf");
-
-        //call method to merge pdf files.
-        mergePdfFiles(inputPdfList, outputStream);     
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    }
-
-
-
-
-
+			//call method to merge pdf files.
+			mergePdfFiles(inputPdfList, outputStream);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
 
 }
